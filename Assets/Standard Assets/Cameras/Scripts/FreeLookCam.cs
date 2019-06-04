@@ -22,6 +22,7 @@ namespace UnityStandardAssets.Cameras
         [SerializeField] private bool m_VerticalAutoReturn = false;           // set wether or not the vertical axis should auto return
 
         private float m_LookAngle;                    // The rig's y axis rotation.
+        private float m_lookAngleY;
         private float m_TiltAngle;                    // The pivot's x axis rotation.
         private const float k_LookDistance = 100f;    // How far in front of the pivot the character's look target is.
 		private Vector3 m_PivotEulers;
@@ -78,9 +79,10 @@ namespace UnityStandardAssets.Cameras
 
             // Adjust the look angle by an amount proportional to the turn speed and horizontal input.
             m_LookAngle += x*m_TurnSpeed;
+            m_lookAngleY -= y*m_TurnSpeed; // EIGEN TOEVOEGING: Geen tilt, gewoon angles.
 
             // Rotate the rig (the root object) around Y axis only:
-            m_TransformTargetRot = Quaternion.Euler(0f, m_LookAngle, 0f);
+            m_TransformTargetRot = Quaternion.Euler(m_lookAngleY, m_LookAngle, 0f);
 
             if (m_VerticalAutoReturn)
             {
@@ -102,12 +104,12 @@ namespace UnityStandardAssets.Cameras
 
 			if (m_TurnSmoothing > 0)
 			{
-				m_Pivot.localRotation = Quaternion.Slerp(m_Pivot.localRotation, m_PivotTargetRot, m_TurnSmoothing * Time.deltaTime);
+				//m_Pivot.localRotation = Quaternion.Slerp(m_Pivot.localRotation, m_PivotTargetRot, m_TurnSmoothing * Time.deltaTime); GEEN TILT
 				transform.localRotation = Quaternion.Slerp(transform.localRotation, m_TransformTargetRot, m_TurnSmoothing * Time.deltaTime);
 			}
 			else
 			{
-				m_Pivot.localRotation = m_PivotTargetRot;
+				//m_Pivot.localRotation = m_PivotTargetRot; GEEN TILT
 				transform.localRotation = m_TransformTargetRot;
 			}
         }

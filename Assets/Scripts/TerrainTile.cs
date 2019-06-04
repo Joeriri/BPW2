@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GetInCar : MonoBehaviour
+public class TerrainTile : MonoBehaviour
 {
-    
+    public Vector2 tile = Vector2.zero;
 
+    // Start is called before the first frame update
     void Start()
     {
         

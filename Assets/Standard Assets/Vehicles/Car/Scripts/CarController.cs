@@ -162,6 +162,14 @@ namespace UnityStandardAssets.Vehicles.Car
                 m_WheelColliders[3].brakeTorque = hbTorque;
             }
 
+            // EDIT JOERI
+            if (handbrake == 0f)
+            {
+                var hbTorque = 0f;
+                m_WheelColliders[2].brakeTorque = hbTorque;
+                m_WheelColliders[3].brakeTorque = hbTorque;
+            }
+
 
             CalculateRevs();
             GearChanging();
