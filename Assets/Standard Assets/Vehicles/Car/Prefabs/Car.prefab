@@ -6345,10 +6345,25 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4647662663180615102, guid: 11ba70b018a29b04ba54fba4d27b5916,
+        type: 3}
+      propertyPath: m_Name
+      value: JeepBody
+      objectReference: {fileID: 0}
     - target: {fileID: -4748874672442389124, guid: 11ba70b018a29b04ba54fba4d27b5916,
         type: 3}
       propertyPath: m_Name
       value: JeepWheelFrontLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8588338584874314335, guid: 11ba70b018a29b04ba54fba4d27b5916,
+        type: 3}
+      propertyPath: m_Name
+      value: JeepWheelRearLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962894308286029321, guid: 11ba70b018a29b04ba54fba4d27b5916,
+        type: 3}
+      propertyPath: m_Name
+      value: JeepWheelFrontRight
       objectReference: {fileID: 0}
     - target: {fileID: -4379411213387531774, guid: 11ba70b018a29b04ba54fba4d27b5916,
         type: 3}
@@ -6410,21 +6425,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4647662663180615102, guid: 11ba70b018a29b04ba54fba4d27b5916,
+    - target: {fileID: 79621727649304875, guid: 11ba70b018a29b04ba54fba4d27b5916,
         type: 3}
-      propertyPath: m_Name
-      value: JeepBody
-      objectReference: {fileID: 0}
-    - target: {fileID: 6962894308286029321, guid: 11ba70b018a29b04ba54fba4d27b5916,
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 77f6f8922cae5da4fbb7b9d6558cad11, type: 2}
+    - target: {fileID: -8221963241362319999, guid: 11ba70b018a29b04ba54fba4d27b5916,
         type: 3}
-      propertyPath: m_Name
-      value: JeepWheelFrontRight
-      objectReference: {fileID: 0}
-    - target: {fileID: 8588338584874314335, guid: 11ba70b018a29b04ba54fba4d27b5916,
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 77f6f8922cae5da4fbb7b9d6558cad11, type: 2}
+    - target: {fileID: 1197654348229058851, guid: 11ba70b018a29b04ba54fba4d27b5916,
         type: 3}
-      propertyPath: m_Name
-      value: JeepWheelRearLeft
-      objectReference: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 77f6f8922cae5da4fbb7b9d6558cad11, type: 2}
+    - target: {fileID: -6434590018773005939, guid: 11ba70b018a29b04ba54fba4d27b5916,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 77f6f8922cae5da4fbb7b9d6558cad11, type: 2}
+    - target: {fileID: -2589396447218874659, guid: 11ba70b018a29b04ba54fba4d27b5916,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 77f6f8922cae5da4fbb7b9d6558cad11, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11ba70b018a29b04ba54fba4d27b5916, type: 3}
 --- !u!4 &59083753018061193 stripped

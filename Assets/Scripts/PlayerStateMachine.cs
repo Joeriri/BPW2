@@ -19,7 +19,8 @@ public class PlayerStateMachine : MonoBehaviour
 
     // Sky
     [Header("Stargazing")]
-    [SerializeField] private Canvas sky;
+    private StarMap starMap;
+    private Canvas sky;
 
     public enum PlayerStates
     {
@@ -40,6 +41,9 @@ public class PlayerStateMachine : MonoBehaviour
         car = FindObjectOfType<UnityStandardAssets.Vehicles.Car.CarController>();
         carUserControl = car.GetComponent<UnityStandardAssets.Vehicles.Car.CarUserControl>();
         carExitPoint = car.GetComponentInChildren<CarExitPoint>();
+        // StarMap
+        starMap = FindObjectOfType<StarMap>();
+        sky = starMap.GetComponent<Canvas>();
 
     }
 
@@ -147,6 +151,7 @@ public class PlayerStateMachine : MonoBehaviour
         state = PlayerStates.Stargazing;
         fpc.enabled = false;
         car.enabled = false;
+        starMap.UpdateStarMap();
         sky.gameObject.SetActive(true);
 
         //StartCoroutine(LookUp());
