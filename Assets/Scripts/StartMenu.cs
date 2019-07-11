@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class StartMenu : MonoBehaviour
 {
-    private Intro intro;
-
-    private void Awake()
-    {
-        intro = GetComponentInParent<Intro>();
-    }
+    [SerializeField] private Intro intro;
 
     public void StartGame()
     {
-        intro.StartIntroPan();
+        intro.StartIntro();
         Debug.Log("Game started.");
     }
 

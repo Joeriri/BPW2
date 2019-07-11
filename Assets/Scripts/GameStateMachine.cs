@@ -33,11 +33,6 @@ public class GameStateMachine : MonoBehaviour
     void Start()
     {
         state = startState;
-
-        if (startState == GameStates.Title)
-        {
-            EnterTitleState();
-        }
     }
 
     void Update()
@@ -68,17 +63,5 @@ public class GameStateMachine : MonoBehaviour
                 // End state code here!
                 break;
         }
-    }
-
-    void EnterTitleState()
-    {
-        player.gameObject.SetActive(false);
-        introCam.gameObject.SetActive(true);
-    }
-
-    public void EnterDesertState()
-    {
-        player.gameObject.SetActive(true);
-        introCam.gameObject.SetActive(false);
     }
 }

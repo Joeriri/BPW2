@@ -26,12 +26,7 @@ public class StarMap : MonoBehaviour
 
     void Start()
     {
-
-    }
-
-    void Update()
-    {
-        
+        gameObject.SetActive(false);
     }
 
     public void UpdateStarMap()

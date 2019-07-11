@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private Intro intro;
+
     private static GameManager instance;
     public static GameManager Instance
     {
@@ -15,18 +17,15 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        // Singleton
         instance = this;
+
+        // Refs
+        intro = FindObjectOfType<Intro>();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        intro.StartTitleScreen();
     }
 }
