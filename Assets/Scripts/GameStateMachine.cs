@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class GameStateMachine : MonoBehaviour
 {
+    private UnityStandardAssets.Characters.FirstPerson.FirstPersonController player;
+    private Camera playerCam;
+    private Intro introScript;
+    private Camera introCam;
+
     [SerializeField] private GameStates startState;
 
     public enum GameStates
@@ -17,9 +22,22 @@ public class GameStateMachine : MonoBehaviour
     }
     [HideInInspector] public GameStates state;
 
+    private void Awake()
+    {
+        player = FindObjectOfType<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
+        playerCam = player.GetComponentInChildren<Camera>();
+        introScript = FindObjectOfType<Intro>();
+        introCam = introScript.GetComponentInChildren<Camera>();
+    }
+
     void Start()
     {
         state = startState;
+
+        if (startState == GameStates.Title)
+        {
+            EnterTitleState();
+        }
     }
 
     void Update()
@@ -50,5 +68,17 @@ public class GameStateMachine : MonoBehaviour
                 // End state code here!
                 break;
         }
+    }
+
+    void EnterTitleState()
+    {
+        player.gameObject.SetActive(false);
+        introCam.gameObject.SetActive(true);
+    }
+
+    public void EnterDesertState()
+    {
+        player.gameObject.SetActive(true);
+        introCam.gameObject.SetActive(false);
     }
 }
