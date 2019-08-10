@@ -94,7 +94,7 @@ public class PlayerStateMachine : MonoBehaviour
     // De speler zit in de auto
     void CarState()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && car.CurrentSpeed < 15f)
         {
             ExitCarState();
         }
@@ -159,6 +159,11 @@ public class PlayerStateMachine : MonoBehaviour
         fpc.enabled = true;
         car.enabled = true;
         starMap.gameObject.SetActive(false);
+
+        if (starMap.starsCompleted)
+        {
+            GameManager.Instance.ToTempleAnim();
+        }
     }
 
     IEnumerator LookUp(float duration)

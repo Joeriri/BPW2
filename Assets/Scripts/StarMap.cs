@@ -12,7 +12,7 @@ public class StarMap : MonoBehaviour
     private Camera cam;
     
     private int targetStarIndex = 0;
-    private bool starsCompleted = false;
+    public bool starsCompleted = false;
     [SerializeField] private float hitRadius = 20f;
 
     private void Awake()

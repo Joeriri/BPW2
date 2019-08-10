@@ -5,7 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    // Refs
+    private LevelUI levelUI;
 
+    // Vars
+
+    // Singleton
     private static GameManager instance;
     public static GameManager Instance
     {
@@ -21,26 +26,23 @@ public class GameManager : MonoBehaviour
         instance = this;
 
         // Refs
-        
+        levelUI = FindObjectOfType<LevelUI>();
     }
 
-    public void LoadDesertLevel()
+    private void Start()
     {
-        SceneManager.LoadScene("Desert");
+        levelUI.StartFade(Color.white, new Color(255, 255, 255, 0), 2f);
     }
 
-    public void LoadTempleLevel()
+    public void ToTempleAnim()
     {
+        StartCoroutine(EnterTempleRoutine());
+    }
+
+    IEnumerator EnterTempleRoutine()
+    {
+        levelUI.StartFade(Color.clear, Color.black, 2f);
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene("Temple");
-    }
-
-    public void LoadEnd()
-    {
-        SceneManager.LoadScene("End");
-    }
-    
-    public void LoadTitleMenu()
-    {
-        SceneManager.LoadScene("TitleMenu");
     }
 }

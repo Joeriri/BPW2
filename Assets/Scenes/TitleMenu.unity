@@ -563,7 +563,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &789671713
 RectTransform:
   m_ObjectHideFlags: 0
@@ -971,9 +971,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeScreen: {fileID: 789671714}
   introText: {fileID: 482244402}
+  startWaitDuration: 1
   startFadeDuration: 2
   introFadeDuration: 2
-  introTextFadeDuration: 4
+  introWaitDuration: 1
+  introTextFadeDuration: 3
+  introTextWaitDuration: 3
 --- !u!4 &1177279045
 Transform:
   m_ObjectHideFlags: 0

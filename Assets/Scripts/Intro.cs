@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Intro : MonoBehaviour
 {
@@ -23,12 +24,18 @@ public class Intro : MonoBehaviour
     // Start sequence
     IEnumerator StartRoutine()
     {
+        // Enable Fadescreen
         fadeScreen.gameObject.SetActive(true);
         fadeScreen.color = Color.black;
+        // Wait
         yield return new WaitForSeconds(startWaitDuration);
+        // Fade in
         StartFade(Color.clear, startFadeDuration);
         yield return new WaitForSeconds(startFadeDuration);
+        // Disable Fadescreen
         fadeScreen.gameObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     // Intro sequence
@@ -39,32 +46,31 @@ public class Intro : MonoBehaviour
 
     IEnumerator IntroRoutine()
     {
+        // Fade in
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         fadeScreen.gameObject.SetActive(true);
         StartFade(Color.white, introFadeDuration);
         yield return new WaitForSeconds(introFadeDuration);
+        // Wait
         yield return new WaitForSeconds(introWaitDuration);
-        // Narrative
+        // Text fade in
         introText.gameObject.SetActive(true);
-        introText.color = Color.clear;
-
-        float step = 1f / introTextFadeDuration;
-        for (float i = 0f; i < 1f; i += step * Time.deltaTime)
-        {
-            introText.color = Color.Lerp(Color.clear, Color.black, i);
-            yield return null;
-        }
-
+        FadeText(introText, new Color(50, 50, 50, 0), new Color(50, 50, 50), introTextFadeDuration);
+        // Wait
         yield return new WaitForSeconds(introTextWaitDuration);
-
-        float step2 = 1f / introTextFadeDuration;
-        for (float i = 0f; i < 1f; i += step * Time.deltaTime)
-        {
-            introText.color = Color.Lerp(Color.black, Color.clear, i);
-            yield return null;
-        }
+        // Text fade out
+        FadeText(introText, new Color(50, 50, 50), new Color(50, 50, 50, 0), introTextFadeDuration);
+        introText.gameObject.SetActive(false);
+        // Wait
+        yield return new WaitForSeconds(2f);
+        // Go to Desert scene
+        SceneManager.LoadScene("SampleScene");
+        fadeScreen.gameObject.SetActive(false);
     }
 
     // Fade screen color
+
     public void StartFade(Color newColor, float duration)
     { 
         StartCoroutine(FadeToColor(fadeScreen.color, newColor, duration));
@@ -76,6 +82,23 @@ public class Intro : MonoBehaviour
         for (float i = 0f; i < 1f; i += step * Time.deltaTime)
         {
             fadeScreen.color = Color.Lerp(oldColor, newColor, i);
+            yield return null;
+        }
+    }
+
+    // Fade Text color
+
+    private void FadeText(Text text, Color oldColor, Color newColor, float duration)
+    {
+        StartCoroutine(FadeTextRoutine(text, oldColor, newColor, duration));
+    }
+
+    IEnumerator FadeTextRoutine(Text text, Color oldColor, Color newColor, float duration)
+    {
+        float step = 1f / duration;
+        for (float i = 0f; i < 1f; i += step * Time.deltaTime)
+        {
+            text.color = Color.Lerp(oldColor, newColor, i);
             yield return null;
         }
     }
