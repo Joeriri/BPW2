@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // SOURCE CODE: https://answers.unity.com/questions/734210/tiling-problem-with-perlin-generated-terrain-chunk.html
+// Als basis genomen.
 
 public class TerrainGenerator : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class TerrainGenerator : MonoBehaviour
     [SerializeField] private float maxHeight = 15f;
     [SerializeField] private float scale = 5f;
     [SerializeField] private Vector2 noiseOffset = new Vector2(100, 100);
+    [SerializeField] private Texture2D texture;
 
     [SerializeField] private UnityStandardAssets.Characters.FirstPerson.FirstPersonController player;
     private Vector2 playerTile = Vector2.zero;
@@ -79,6 +81,7 @@ public class TerrainGenerator : MonoBehaviour
         NewTerrain.baseMapResolution = (int)mapSize.x / 2;
         NewTerrain.SetDetailResolution(1024, 16);
         NewTerrain.SetHeights(0, 0, Heights);
+        NewTerrain.terrainLayers = GenerateTerrainLayer();
 
         // Maak nieuwe terrain tile
         GameObject TerrainSquare = Terrain.CreateTerrainGameObject(NewTerrain);
@@ -151,5 +154,14 @@ public class TerrainGenerator : MonoBehaviour
         }
 
         return tile;
+    }
+
+    private TerrainLayer[] GenerateTerrainLayer()
+    {
+        TerrainLayer[] tls = new TerrainLayer[1];
+        TerrainLayer tl = new TerrainLayer();
+        tl.diffuseTexture = texture;
+        tls[0] = tl;
+        return tls;
     }
 }

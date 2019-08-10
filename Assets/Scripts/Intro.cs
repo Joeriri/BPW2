@@ -5,86 +5,78 @@ using UnityEngine.UI;
 
 public class Intro : MonoBehaviour
 {
-    private Camera introCam;
-    private UnityStandardAssets.Characters.FirstPerson.FirstPersonController player;
-    private Camera playerCam;
-    private LevelUI levelUI;
-    private StartMenu startMenu;
-    private Button[] startMenuButtons;
-    [SerializeField] private Canvas titleScreen;
+    [SerializeField] private Image fadeScreen;
+    [SerializeField] private Text introText;
 
-    [SerializeField] private float panDuration = 1f;
-    [SerializeField] private float fadeDuration = 1f;
+    [SerializeField] private float startWaitDuration = 1f;
+    [SerializeField] private float startFadeDuration = 2f;
+    [SerializeField] private float introFadeDuration = 2f;
+    [SerializeField] private float introWaitDuration = 1f;
+    [SerializeField] private float introTextFadeDuration = 4f;
+    [SerializeField] private float introTextWaitDuration = 4f;
 
-    private void Awake()
+    private void Start()
     {
-        introCam = GetComponentInChildren<Camera>();
-        player = FindObjectOfType<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
-        playerCam = player.GetComponentInChildren<Camera>();
-        levelUI = FindObjectOfType<LevelUI>();
-        startMenu = FindObjectOfType<StartMenu>();
-        startMenuButtons = startMenu.GetComponentsInChildren<Button>();
+        StartCoroutine(StartRoutine());
     }
 
-    public void StartTitleScreen()
+    // Start sequence
+    IEnumerator StartRoutine()
     {
-        // Deactiveer player
-        player.enabled = false;
-        playerCam.gameObject.SetActive(false);
-        // Activeer intro camera
-        introCam.gameObject.SetActive(true);
-        // Laat title screen zien
-        titleScreen.gameObject.SetActive(true);
-        // Zet menu buttons aan
-        foreach (Button b in startMenuButtons)
-        {
-            b.gameObject.SetActive(true);
-        }
-        // Deactiveer blackScreen (zodat je op de knoppen kan drukken)
-        levelUI.BlackScreenActivate(false);
+        fadeScreen.gameObject.SetActive(true);
+        fadeScreen.color = Color.black;
+        yield return new WaitForSeconds(startWaitDuration);
+        StartFade(Color.clear, startFadeDuration);
+        yield return new WaitForSeconds(startFadeDuration);
+        fadeScreen.gameObject.SetActive(false);
     }
 
+    // Intro sequence
     public void StartIntro()
     {
-        // Zet menu buttons uit (technisch gezien hoeft dit niet omdat de blackScreen ervoor zit, maar voor de zekerheid)
-        foreach (Button b in startMenuButtons)
-        {
-            b.gameObject.SetActive(false);
-        }
-        // Zet blackscreen weer aan
-        levelUI.BlackScreenActivate(true);
-        // Start intro coroutine
-        StartCoroutine(IntroPan(panDuration));
+        StartCoroutine(IntroRoutine());
     }
 
-    private void EndIntro()
+    IEnumerator IntroRoutine()
     {
-        // Unfreeze player
-        player.enabled = true;
-        playerCam.gameObject.SetActive(true);
-        // Deactivate intro camera
-        introCam.gameObject.SetActive(false);
-        // Hide title screen
-        titleScreen.gameObject.SetActive(false);
-    }
+        fadeScreen.gameObject.SetActive(true);
+        StartFade(Color.white, introFadeDuration);
+        yield return new WaitForSeconds(introFadeDuration);
+        yield return new WaitForSeconds(introWaitDuration);
+        // Narrative
+        introText.gameObject.SetActive(true);
+        introText.color = Color.clear;
 
-    IEnumerator IntroPan(float duration)
-    {
-        // pan the camera down
-        for (float i = 0f; i < duration; i += Time.deltaTime)
+        float step = 1f / introTextFadeDuration;
+        for (float i = 0f; i < 1f; i += step * Time.deltaTime)
         {
-            var startPos = new Vector3(introCam.transform.position.x, 400, introCam.transform.position.z);
-            var targetPos = new Vector3(introCam.transform.position.x, 20, introCam.transform.position.z);
-
-            introCam.transform.position = Vector3.Lerp(startPos, targetPos, i / panDuration);
+            introText.color = Color.Lerp(Color.clear, Color.black, i);
             yield return null;
         }
-        // Fade to black
-        levelUI.StartFadeToBlack(1f);
-        yield return new WaitForSeconds(1f);
-        // End intro sequence
-        EndIntro();
-        // Fade to clear
-        levelUI.StartFadeToClear(1f);
+
+        yield return new WaitForSeconds(introTextWaitDuration);
+
+        float step2 = 1f / introTextFadeDuration;
+        for (float i = 0f; i < 1f; i += step * Time.deltaTime)
+        {
+            introText.color = Color.Lerp(Color.black, Color.clear, i);
+            yield return null;
+        }
+    }
+
+    // Fade screen color
+    public void StartFade(Color newColor, float duration)
+    { 
+        StartCoroutine(FadeToColor(fadeScreen.color, newColor, duration));
+    }
+
+    IEnumerator FadeToColor(Color oldColor, Color newColor, float duration)
+    {
+        float step = 1f / duration;
+        for (float i = 0f; i < 1f; i += step * Time.deltaTime)
+        {
+            fadeScreen.color = Color.Lerp(oldColor, newColor, i);
+            yield return null;
+        }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private Intro intro;
 
     private static GameManager instance;
     public static GameManager Instance
@@ -21,11 +21,26 @@ public class GameManager : MonoBehaviour
         instance = this;
 
         // Refs
-        intro = FindObjectOfType<Intro>();
+        
     }
 
-    private void Start()
+    public void LoadDesertLevel()
     {
-        intro.StartTitleScreen();
+        SceneManager.LoadScene("Desert");
+    }
+
+    public void LoadTempleLevel()
+    {
+        SceneManager.LoadScene("Temple");
+    }
+
+    public void LoadEnd()
+    {
+        SceneManager.LoadScene("End");
+    }
+    
+    public void LoadTitleMenu()
+    {
+        SceneManager.LoadScene("TitleMenu");
     }
 }

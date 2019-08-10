@@ -6,8 +6,6 @@ public class GameStateMachine : MonoBehaviour
 {
     private UnityStandardAssets.Characters.FirstPerson.FirstPersonController player;
     private Camera playerCam;
-    private Intro introScript;
-    private Camera introCam;
 
     [SerializeField] private GameStates startState;
 
@@ -26,8 +24,6 @@ public class GameStateMachine : MonoBehaviour
     {
         player = FindObjectOfType<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
         playerCam = player.GetComponentInChildren<Camera>();
-        introScript = FindObjectOfType<Intro>();
-        introCam = introScript.GetComponentInChildren<Camera>();
     }
 
     void Start()

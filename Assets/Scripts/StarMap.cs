@@ -8,7 +8,6 @@ public class StarMap : MonoBehaviour
     [SerializeField] private RectTransform playerTracker;
     [SerializeField] private RectTransform player;
     private Star[] stars;
-    private RectTransform canvas;
     private PlayerStateMachine worldPlayer;
     private Camera cam;
     
@@ -19,14 +18,13 @@ public class StarMap : MonoBehaviour
     private void Awake()
     {
         worldPlayer = FindObjectOfType<PlayerStateMachine>();
-        canvas = GetComponent<RectTransform>();
         cam = worldPlayer.GetComponentInChildren<Camera>();
         stars = starsParent.GetComponentsInChildren<Star>();
     }
 
-    void Start()
+    private void Start()
     {
-        gameObject.SetActive(false);
+        
     }
 
     public void UpdateStarMap()

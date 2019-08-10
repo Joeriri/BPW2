@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartMenu : MonoBehaviour
+public class TitleMenu : MonoBehaviour
 {
     [SerializeField] private Intro intro;
 
     public void StartGame()
     {
         intro.StartIntro();
-        Debug.Log("Game started.");
+        Debug.Log("Game started!");
     }
 
     public void QuitGame()
     {
         Application.Quit();
-        Debug.Log("Game quit.");
+        Debug.Log("Game quit!");
     }
 }

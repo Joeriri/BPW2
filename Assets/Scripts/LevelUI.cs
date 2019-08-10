@@ -5,37 +5,25 @@ using UnityEngine.UI;
 
 public class LevelUI : MonoBehaviour
 {
-    [SerializeField] private Image blackScreen;
+    [SerializeField] private Image fadeScreen;
+    private Color oldColor;
 
     public void BlackScreenActivate(bool value)
     {
-        blackScreen.enabled = value;
-    }
-    
-    public void StartFadeToBlack(float duration)
-    {
-        StartCoroutine(FadeToBlack(duration));
+        fadeScreen.enabled = value;
     }
 
-    IEnumerator FadeToBlack(float duration)
+    public void StartFade(Color color, float duration)
+    {
+        oldColor = fadeScreen.color;
+        StartCoroutine(FadeTo(color, duration));
+    }
+
+    IEnumerator FadeTo(Color newColor, float duration)
     {
         for (float i = 0f; i < duration; i += Time.deltaTime)
         {
-            blackScreen.color = Color.Lerp(Color.clear, Color.black, i);
-            yield return null;
-        }
-    }
-
-    public void StartFadeToClear(float duration)
-    {
-        StartCoroutine(FadeToClear(duration));
-    }
-
-    IEnumerator FadeToClear(float duration)
-    {
-        for (float i = 0f; i < duration; i += Time.deltaTime)
-        {
-            blackScreen.color = Color.Lerp(Color.black, Color.clear, i);
+            fadeScreen.color = Color.Lerp(oldColor, newColor, i);
             yield return null;
         }
     }
