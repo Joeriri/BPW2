@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class PlayerStateMachine : MonoBehaviour
 {
+    // Refs
+    private LevelUI levelUI;
+
     // Player
     private UnityStandardAssets.Characters.FirstPerson.FirstPersonController fpc;
     private CharacterController cc;
     private Camera cam;
     private Rigidbody rb;
 
+    // Car
     [Header("Car")]
     private UnityStandardAssets.Vehicles.Car.CarController car;
     private UnityStandardAssets.Vehicles.Car.CarUserControl carUserControl;
@@ -32,6 +36,8 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Awake()
     {
+        // Refs
+        levelUI = FindObjectOfType<LevelUI>();
         // Player
         fpc = GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
         cam = GetComponentInChildren<Camera>();
@@ -94,7 +100,10 @@ public class PlayerStateMachine : MonoBehaviour
     // De speler zit in de auto
     void CarState()
     {
-        if (Input.GetKeyDown(KeyCode.E) && car.CurrentSpeed < 15f)
+        // Dit is voor wanneer de jeep wel rijdt.
+        // if (Input.GetKeyDown(KeyCode.E) && car.CurrentSpeed < 15f)
+
+        if (Input.GetKeyDown(KeyCode.E))
         {
             ExitCarState();
         }
@@ -107,9 +116,9 @@ public class PlayerStateMachine : MonoBehaviour
         transform.parent = car.transform;
         transform.position = car.transform.position;
         // Enable car
-        carUserControl.enabled = true;
+        //carUserControl.enabled = true;
         carCam.gameObject.SetActive(true);
-        car.Move(0, 0, 0, 0); // Disable handbreak
+        //car.Move(0, 0, 0, 0); // Disable handbreak
         // Disable player
         fpc.enabled = false;
         cc.enabled = false;
@@ -124,9 +133,9 @@ public class PlayerStateMachine : MonoBehaviour
         transform.parent = null;
         transform.LookAt(car.transform);
         // Disable car
-        carUserControl.enabled = false;
+        //carUserControl.enabled = false;
         carCam.gameObject.SetActive(false);
-        car.Move(0, 0, 0, 1); // Enable handbreak
+        //car.Move(0, 0, 0, 1); // Enable handbreak
         // Enable player
         fpc.enabled = true;
         cc.enabled = true;
@@ -145,38 +154,49 @@ public class PlayerStateMachine : MonoBehaviour
     void EnterTelescopeState()
     {
         state = PlayerStates.Stargazing;
-        fpc.enabled = false;
-        car.enabled = false;
-        starMap.gameObject.SetActive(true);
-        starMap.UpdateStarMap();
-
-        //StartCoroutine(LookUp());
+        StartCoroutine(LookUp());
     }
 
     void ExitTelescopeState()
     {
         state = PlayerStates.Walking;
+        StartCoroutine(LookDown());
+    }
+
+    IEnumerator LookUp()
+    {
+        // Disable player and car
+        fpc.enabled = false;
+        car.enabled = false;
+        // Fade in
+        levelUI.StartFade(Color.clear, Color.black, 0.25f);
+        yield return new WaitForSeconds(0.25f);
+        // Enable StarMap
+        starMap.gameObject.SetActive(true);
+        starMap.UpdateStarMap();
+        // Fade out
+        levelUI.StartFade(Color.black, Color.clear, 0.5f);
+
+        // Geheugensteun voor camera draai van de speler
+        // playerCam.gameObject.transform.rotation = Quaternion.EulerAngles
+    }
+
+    IEnumerator LookDown()
+    {
+        // Fade in
+        levelUI.StartFade(Color.clear, Color.black, 0.25f);
+        yield return new WaitForSeconds(0.25f);
+        // Disable Starmap, enable player and car
         fpc.enabled = true;
         car.enabled = true;
         starMap.gameObject.SetActive(false);
+        // Fade out
+        levelUI.StartFade(Color.black, Color.clear, 0.5f);
 
+        // Check for stuff
         if (starMap.starsCompleted)
         {
             GameManager.Instance.ToTempleAnim();
         }
-    }
-
-    IEnumerator LookUp(float duration)
-    {
-        float t = 0;
-        float step = 1f / duration;
-        while (t < 1)
-        {
-
-        }
-
-        //playerCam.gameObject.transform.rotation = Quaternion.EulerAngles
-
-        yield return null;
     }
 }

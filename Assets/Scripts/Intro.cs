@@ -13,8 +13,8 @@ public class Intro : MonoBehaviour
     [SerializeField] private float startFadeDuration = 2f;
     [SerializeField] private float introFadeDuration = 2f;
     [SerializeField] private float introWaitDuration = 1f;
-    [SerializeField] private float introTextFadeDuration = 4f;
-    [SerializeField] private float introTextWaitDuration = 4f;
+    [SerializeField] private float introTextFadeDuration = 3f;
+    [SerializeField] private float introTextWaitDuration = 3f;
 
     private void Start()
     {
@@ -30,7 +30,7 @@ public class Intro : MonoBehaviour
         // Wait
         yield return new WaitForSeconds(startWaitDuration);
         // Fade in
-        StartFade(Color.clear, startFadeDuration);
+        StartFade(Color.black, Color.clear, startFadeDuration);
         yield return new WaitForSeconds(startFadeDuration);
         // Disable Fadescreen
         fadeScreen.gameObject.SetActive(false);
@@ -50,30 +50,30 @@ public class Intro : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         fadeScreen.gameObject.SetActive(true);
-        StartFade(Color.white, introFadeDuration);
+        StartFade(new Color(255,255,255,0), Color.white, introFadeDuration);
         yield return new WaitForSeconds(introFadeDuration);
         // Wait
         yield return new WaitForSeconds(introWaitDuration);
         // Text fade in
         introText.gameObject.SetActive(true);
-        FadeText(introText, new Color(50, 50, 50, 0), new Color(50, 50, 50), introTextFadeDuration);
+        FadeText(introText, Color.clear, Color.black, introTextFadeDuration);
+        yield return new WaitForSeconds(introTextFadeDuration);
         // Wait
         yield return new WaitForSeconds(introTextWaitDuration);
         // Text fade out
-        FadeText(introText, new Color(50, 50, 50), new Color(50, 50, 50, 0), introTextFadeDuration);
+        FadeText(introText, Color.black, Color.clear, introTextFadeDuration);
+        yield return new WaitForSeconds(introTextFadeDuration);
         introText.gameObject.SetActive(false);
         // Wait
         yield return new WaitForSeconds(2f);
         // Go to Desert scene
         SceneManager.LoadScene("SampleScene");
-        fadeScreen.gameObject.SetActive(false);
     }
 
     // Fade screen color
-
-    public void StartFade(Color newColor, float duration)
-    { 
-        StartCoroutine(FadeToColor(fadeScreen.color, newColor, duration));
+    public void StartFade(Color oldColor, Color newColor, float duration)
+    {
+        StartCoroutine(FadeToColor(oldColor, newColor, duration));
     }
 
     IEnumerator FadeToColor(Color oldColor, Color newColor, float duration)

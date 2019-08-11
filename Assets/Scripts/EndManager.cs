@@ -26,10 +26,12 @@ public class EndManager : MonoBehaviour
         yield return new WaitForSeconds(beginWaitDuration);
         // Text fade in
         FadeText(outroText, new Color(205, 205, 205, 0), new Color(205, 205, 205), textFadeDuration);
+        yield return new WaitForSeconds(textFadeDuration);
         // Wait
         yield return new WaitForSeconds(textWaitDuration);
         // Text fade out
         FadeText(outroText, new Color(205, 205, 205), new Color(205, 205, 205, 0), textFadeDuration);
+        yield return new WaitForSeconds(textFadeDuration);
         // Wait
         yield return new WaitForSeconds(endWaitDuration);
         // Go to Title Menu scene

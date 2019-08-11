@@ -208,6 +208,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -299,6 +300,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -390,6 +392,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5193,6 +5196,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5966,6 +5970,7 @@ GameObject:
   - component: {fileID: 11400002}
   - component: {fileID: 11400022}
   - component: {fileID: 11400024}
+  - component: {fileID: 927217905}
   m_Layer: 0
   m_Name: Car
   m_TagString: Car
@@ -6018,7 +6023,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100042}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ea65b38d485c374caa584a03f1de571, type: 3}
   m_Name: 
@@ -6050,7 +6055,7 @@ MonoBehaviour:
   m_SpeedType: 0
   m_Topspeed: 150
   m_RevRangeBoundary: 1
-  m_SlipLimit: 0.3
+  m_SlipLimit: 1
   m_BrakeTorque: 20000
 --- !u!114 &11400022
 MonoBehaviour:
@@ -6059,7 +6064,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100042}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
@@ -6085,9 +6090,21 @@ MonoBehaviour:
   lowPitchMin: 1
   lowPitchMax: 5
   highPitchMultiplier: 0.25
-  maxRolloffDistance: 500
+  maxRolloffDistance: 50
   dopplerLevel: 1
   useDoppler: 1
+--- !u!114 &927217905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06a2258231d689942977935494805161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &100062
 GameObject:
   m_ObjectHideFlags: 0
@@ -6276,7 +6293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 553500695}
-  m_AutoTargetPlayer: 1
+  m_AutoTargetPlayer: 0
   m_UpdateType: 0
   m_MoveSpeed: 1
   m_TurnSpeed: 1.5
@@ -6339,11 +6356,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Jeep
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: 11ba70b018a29b04ba54fba4d27b5916,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4647662663180615102, guid: 11ba70b018a29b04ba54fba4d27b5916,
         type: 3}

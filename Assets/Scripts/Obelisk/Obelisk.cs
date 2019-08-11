@@ -36,14 +36,23 @@ public class Obelisk : MonoBehaviour
         foreach (Shard shard in shards)
         {
             // Pick random axis
-            string[] dirs = new[] { "X", "Y", "Z" };
-            int randomIndex = Random.Range(0, 3);
+            string[] dirs = new[] { "X", "Z" };
+
+            // Dit is de regel die rekening houdt met ook de Y-as.
+            // string[] dirs = new[] { "X", "Y" "Z" };
+
+            int randomIndex = Random.Range(0, dirs.Length);
             string randomDir = dirs[randomIndex];
             shard.dir = randomDir;
             // Set zeroPos and maxPos
             shard.zeroPos = shard.transform.position;
-            shard.maxPos = shard.transform.position + new Vector3(Random.Range(-10, 10), Random.Range(-2, 5), Random.Range(-10, 10));
-            // Set maxRotate
+            shard.maxPos = shard.transform.position + (shard.transform.position - shardsParent.transform.position) * 10;
+
+            // Hieronder is de oude manier van het bepalen van de maxPos. Die is meer willekeurig.
+            // shard.maxPos = shard.transform.position + new Vector3(Random.Range(-10, 10), Random.Range(-2, 5), Random.Range(-10, 10));
+
+            // Set zeroRot and maxRotate
+            shard.zeroRot = shard.transform.rotation.eulerAngles;
             shard.maxRotate = new Vector3(Random.Range(90f, 360f), Random.Range(90f, 360f), Random.Range(90f, 360f));
         }
     }
@@ -77,17 +86,17 @@ public class Obelisk : MonoBehaviour
                     if (shard.dir == "X")
                     {
                         posDest = Vector3.Lerp(shard.zeroPos, shard.maxPos, lrpX);
-                        rotDest = Vector3.Lerp(Vector3.zero, shard.maxRotate, lrpX);
+                        rotDest = Vector3.Lerp(shard.zeroRot, shard.maxRotate, lrpX);
                     }
                     if (shard.dir == "Y")
                     {
                         posDest = Vector3.Lerp(shard.zeroPos, shard.maxPos, lrpY);
-                        rotDest = Vector3.Lerp(Vector3.zero, shard.maxRotate, lrpY);
+                        rotDest = Vector3.Lerp(shard.zeroRot, shard.maxRotate, lrpY);
                     }
                     if (shard.dir == "Z")
                     {
                         posDest = Vector3.Lerp(shard.zeroPos, shard.maxPos, lrpZ);
-                        rotDest = Vector3.Lerp(Vector3.zero, shard.maxRotate, lrpZ);
+                        rotDest = Vector3.Lerp(shard.zeroRot, shard.maxRotate, lrpZ);
                     }
                 }
                 // Als puzzel opgelost is
@@ -95,7 +104,7 @@ public class Obelisk : MonoBehaviour
                 {
                     // destination wordt zeropos
                     posDest = shard.zeroPos;
-                    rotDest = Vector3.zero;
+                    rotDest = shard.zeroRot;
                 }
 
                 // beweeg shards
@@ -103,7 +112,7 @@ public class Obelisk : MonoBehaviour
                 shard.transform.rotation = Quaternion.Euler(rotDest);
 
                 // Zolang minstens één shard niet op zn plek is, maak allShardsInPlace false.
-                if (shard.transform.position != shard.zeroPos)
+                if (Vector3.Distance(shard.transform.position, shard.zeroPos) > 0.005f)
                 {
                     allShardsInPlace = false;
                 }
@@ -114,6 +123,7 @@ public class Obelisk : MonoBehaviour
             {
                 frozen = true;
                 templeManager.ExitTemple();
+                FindObjectOfType<AudioManager>().Play("ObeliskSolve");
                 Debug.Log("Obelisk: All shards in place.");
             }
 
